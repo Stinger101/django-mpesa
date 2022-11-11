@@ -125,12 +125,13 @@ def check_payment_status(checkout_request_id, shortcode=None):
         requestId = json_response.get('CheckoutRequestID')
         transaction = PaymentTransaction.objects.get(
             checkout_request_id=requestId)
+        result_code = json_response['ResultCode']
         if transaction:
             transaction.is_finished = True
             transaction.is_successful = (result_code == "0")
             transaction.save()
 
-        result_code = json_response['ResultCode']
+        
         response_message = json_response['ResultDesc']
         return {
             "result_code": result_code,
