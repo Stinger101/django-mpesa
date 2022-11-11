@@ -127,7 +127,7 @@ def check_payment_status(checkout_request_id, shortcode=None):
             checkout_request_id=requestId)
         if transaction:
             transaction.is_finished = True
-            transaction.is_successful = True
+            transaction.is_successful = (result_code == "0")
             transaction.save()
 
         result_code = json_response['ResultCode']
